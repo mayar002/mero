@@ -6,10 +6,10 @@
     <title>Information Page</title>
     <style>
         body {
-font-variant: small-caps;
-        font-style: italic;
+            font-variant: small-caps;
+            font-style: italic;
             font-weight: bold;
-    line-height: 1.5;
+            line-height: 1.5;
             font-size: 16px;
             font-weight: 400;
             line-height: 1.6;
@@ -21,6 +21,7 @@ font-variant: small-caps;
             align-items: center;
             height: 100vh;
             background-color: #cce7ff;
+            overflow: hidden; /* To prevent scrollbars caused by floating hearts */
         }
         .info-container {
             max-width: 600px;
@@ -55,9 +56,31 @@ font-variant: small-caps;
             border-radius: 50%;
             margin-bottom: 20px;
         }
+        /* Styles for floating hearts */
+        .heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: url('heart.png') no-repeat center center/contain;
+            animation: float 3s linear infinite;
+        }
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) scale(0.5);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) scale(1);
+                opacity: 0;
+            }
+        }
     </style>
 </head>
-    <body>
+<body>
+    <audio autoplay>
+        <source src="21.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
     <div class="info-container">
         <img src="51.jpg" alt="Profile Picture">
         <h2>📋 Personal Information</h2>
@@ -80,5 +103,25 @@ font-variant: small-caps;
             <span>🩺 Last Medical History:</span> none
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Function to create a heart element
+            function createHeart() {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.style.left = Math.random() * 100 + 'vw';
+                document.body.appendChild(heart);
+
+                // Remove the heart after it finishes floating
+                setTimeout(() => {
+                    heart.remove();
+                }, 3000);
+            }
+
+            // Create a heart every 300 milliseconds
+            setInterval(createHeart, 300);
+        });
+    </script>
 </body>
 </html>
